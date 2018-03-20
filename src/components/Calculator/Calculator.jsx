@@ -6,6 +6,7 @@ class Calculator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            hasValue: false,
             value: null,
             storedValue: null,
             hasDecimal: false,
@@ -26,95 +27,220 @@ class Calculator extends React.Component {
     eval = () => {
         if (!this.state.storedValue)
             return;
-        console.log(this.state);
+        var num;
+        
         switch (this.state.currentOperation) {
             case "add":
+                
+                if(this.state.hasDecimal){
+                    num = parseFloat(this.state.value+"."+this.state.decimal);
+                }
+                else{
+                    num = this.state.value;
+                }
+                
                 this.setState({
-                    value: this.state.value + this.state.storedValue
+                    value: [(num*10000) + (this.state.storedValue*10000)]/10000,
+                    hasDecimal: false,
+                    decimal: null,
+                    hasValue: false,
+                    currentOperation: null
                 });
                 break;
             case "subtract":
+                if(this.state.hasDecimal){
+                    num = parseFloat(this.state.value+"."+this.state.decimal);
+                }
+                else{
+                    num = this.state.value;
+                }
                 this.setState({
-                    value: this.state.storedValue - this.state.value
+                    value: [(this.state.storedValue*10000) - (num*10000)]/10000,
+                    hasDecimal: false,
+                    decimal: null,
+                    hasValue: false,
+                    currentOperation: null
                 });
                 break;
             case "multiply":
+                
+                if(this.state.hasDecimal){
+                    num = parseFloat(this.state.value+"."+this.state.decimal);
+                    
+                }
+                else{
+                    num = this.state.value;
+                }
+               
                 this.setState({
-                    value: this.state.value * this.state.storedValue
+                    value: (num*10000) * (this.state.storedValue*10000)/100000000,
+                    hasDecimal: false,
+                    decimal: null,
+                    hasValue: false,
+                    currentOperation: null
                 });
+                
                 break;
             case "divide":
+                if(this.state.hasDecimal){
+                    num = parseFloat(this.state.value+"."+this.state.decimal);
+                }
+                else{
+                    num = this.state.value;
+                }
                 this.setState({
-                    value: this.state.storedValue / this.state.value
+                    value: (this.state.storedValue/10000) / (num/10000),
+                    hasDecimal: false,
+                    decimal: null,
+                    hasValue: false,
+                    currentOperation: null
                 });
                 break;
             default:
-                console.log('no operation');
+                
         }
     }
 
     multiply() {
         this.eval();
-        this.setState({
-            currentOperation: "multiply",
-            storedValue: this.state.value,
-            value: null,
-            decimal: null,
-            hasDecimal: false
-        });
+        var num;
+        if(this.state.hasDecimal){
+            num = parseFloat(this.state.value+"."+this.state.decimal);
+            
+        }
+        else{
+            num = this.state.value;
+        }
+        if(this.state.currentOperation==null){
+            this.setState({
+                currentOperation: "multiply",
+                storedValue: num,
+                value: null,
+                decimal: null,
+                hasDecimal: false
+            });
+        }
+        else{
+            this.setState({
+                currentOperation: "multiply"
+            });
+        }
     }
 
     divide() {
         this.eval();
-        this.setState({
-            currentOperation: "divide",
-            storedValue: this.state.value,
-            value: null,
-            decimal: null,
-            hasDecimal: false
-        });
+        var num;
+        if(this.state.hasDecimal){
+            num = parseFloat(this.state.value+"."+this.state.decimal);
+        }
+        else{
+            num = this.state.value;
+        }
+        if(this.state.currentOperation==null){
+            this.setState({
+                currentOperation: "divide",
+                storedValue: num,
+                value: null,
+                decimal: null,
+                hasDecimal: false
+            });
+        }
+        else{
+            this.setState({
+                currentOperation: "divide"
+            });
+        }
     }
 
     subtract() {
         this.eval();
-        this.setState({
-            currentOperation: "subtract",
-            storedValue: this.state.value,
-            value: null,
-            decimal: null,
-            hasDecimal: false
-        });
+        var num;
+        if(this.state.hasDecimal){
+            num = parseFloat(this.state.value+"."+this.state.decimal);
+        }
+        else{
+            num = this.state.value;
+        }
+        if(this.state.currentOperation==null){
+            this.setState({
+                currentOperation: "subtract",
+                storedValue: num,
+                value: null,
+                decimal: null,
+                hasDecimal: false
+            });
+        }
+        else{
+            this.setState({
+                currentOperation: "subtract"
+            });
+        }
+        
     }
 
     add() {
-        console.log(this);
-        this.eval();
-        this.setState({
-            currentOperation: "add",
-            storedValue: this.state.value,
-            value: null,
-            decimal: null,
-            hasDecimal: false
-        });
+        
+        
+        var num;
+        if(this.state.hasDecimal){
+            num = parseFloat(this.state.value+"."+this.state.decimal);
+        }
+        else{
+            num = this.state.value;
+        }
+        if(this.state.currentOperation==null){
+            this.eval();
+            this.setState({
+                currentOperation: "add",
+                storedValue: num,
+                value: null,
+                decimal: null,
+                hasDecimal: false
+            });
+        }
+        else{
+            this.setState({
+                currentOperation: "add"
+            });
+        }
+        
     }
 
     equals = () => {
+       
         this.eval();
     };
 
     number(num) {
-        this.state.hasDecimal
+        
+        if(!this.state.hasValue){
+            this.state.hasDecimal
+            ? this.setState({
+                decimal: num,
+                hasValue: true
+            })
+            : this.setState({
+                value: num,
+                hasValue: true
+            })
+            
+        }
+        else{
+            this.state.hasDecimal
             ? this.setState({
                 decimal: this.state.decimal * 10 + num
             })
             : this.setState({
                 value: this.state.value * 10 + num
             })
+        }
+        
+        
 
     }
 
     numberClicked(num) {
-        return (event) => {
+        return () => {
             this.number(num);
         }
     };
@@ -134,17 +260,30 @@ class Calculator extends React.Component {
     render() {
         return (
             <div className='Calculator'>
-                <div className='value'>{this.state.value
-                    ? this
-                        .state
-                        .value
-                        .toString()
-                    : ''}{this.state.hasDecimal
-                    ? '.' + (this.state.decimal
-                    ? this.state.decimal.toString()
-                    : '')
-                    : ''
-                }</div>
+                <div className='value'>
+                {
+                    this.state.value != null
+                        ? 
+                            this.state.value.toString()
+                        : 
+                            ''
+                }
+                    
+                {
+                    this.state.hasDecimal
+                    ? 
+                        '.' + 
+                        (
+                            this.state.decimal
+                                ? 
+                                    this.state.decimal.toString()
+                                : 
+                                    ''
+                            )
+                    : 
+                        ''
+                }
+                </div>
                 <div className='Wrapper'>
                     {/* TOP ROW  */}
                     <div className='cell clear' onClick={this.clearAll}>AC</div>
