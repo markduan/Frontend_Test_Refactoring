@@ -2,18 +2,20 @@ import React from 'react';
 
 import './_Calculator.scss';
 
+const INIT_STATE = {
+  integerStr: '',
+  decimalStr: '',
+  hasDecimal: false,
+  storedValue: 0,
+  currentOperation: null
+};
+
 class Calculator extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      value: null,
-      storedValue: null,
-      hasDecimal: false,
-      decimal: null,
-      currentOperation: null
-    };
+    this.state = INIT_STATE;
   }
 
   eval() {
@@ -110,7 +112,7 @@ class Calculator extends React.Component {
   };
 
   clearAll() {
-    this.setState({currentOperation: null, value: null, storedValue: null});
+    this.setState(INIT_STATE);
   }
 
   clearCurrent() {
