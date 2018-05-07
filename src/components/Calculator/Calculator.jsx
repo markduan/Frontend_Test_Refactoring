@@ -10,6 +10,8 @@ const INIT_STATE = {
   currentOperation: null
 };
 
+const OPERATION_KEYS = ['/', '*', '+', '-', '='];
+
 const CALCULATOR_OPERATIONS = {
   '/': (prevValue, nextValue) => {
     // todo if nextValue is zero, `Infinity` will be returned
@@ -42,6 +44,41 @@ class Calculator extends React.Component {
 
     this.state = INIT_STATE;
   }
+
+  componentDidMount() {
+    document.addEventListener('keydown', ::this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', ::this.handleKeyDown);
+  }
+
+  handleKeyDown(e) {
+    let { key } = e;
+
+    if (key === 'Enter') {
+      key = '=';
+    }
+
+    if ((/\d/).test(key)) {
+      this.appendNumber(key);
+      return;
+    }
+
+    if (OPERATION_KEYS.indexOf(key) !== -1) {
+      this.operate(key);
+      return;
+    }
+
+    if (key === 'Backspace') {
+      this.clearCurrent();
+      return;
+    }
+
+    if (key === '.') {
+      this.handleDecimal();
+    }
+  };
 
   clearAll() {
     this.setState(INIT_STATE);
