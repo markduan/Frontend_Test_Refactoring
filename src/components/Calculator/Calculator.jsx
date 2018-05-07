@@ -132,14 +132,14 @@ class Calculator extends React.Component {
 
   render() {
     return (
-      <div className='Calculator'>
+      <div className='calculator'>
         <div className='value'>
           {this.state.value? this.state.value.toString(): ''}
           {
             this.state.hasDecimal ? '.' + (this.state.decimal ? this.state.decimal.toString(): '') : ''
           }
         </div>
-        <div className='Wrapper'>
+        <div className='cells'>
           {/* TOP ROW  */}
           <div className='cell' onClick={this.clearAll}>AC</div>
           <div className='cell span-two' onClick={this.clearCurrent}>C</div>
