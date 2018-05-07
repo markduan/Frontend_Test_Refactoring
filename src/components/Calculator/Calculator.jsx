@@ -43,36 +43,6 @@ class Calculator extends React.Component {
     this.state = INIT_STATE;
   }
 
-  eval() {
-    if (!this.state.storedValue)
-      return;
-    console.log(this.state);
-    switch (this.state.currentOperation) {
-      case "add":
-        this.setState({
-          value: this.state.value + this.state.storedValue
-        });
-        break;
-      case "subtract":
-        this.setState({
-          value: this.state.storedValue - this.state.value
-        });
-        break;
-      case "multiply":
-        this.setState({
-          value: this.state.value * this.state.storedValue
-        });
-        break;
-      case "divide":
-        this.setState({
-          value: this.state.storedValue / this.state.value
-        });
-        break;
-      default:
-        console.log('no operation');
-    }
-  }
-
   clearAll() {
     this.setState(INIT_STATE);
   }
