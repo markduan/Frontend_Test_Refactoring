@@ -137,13 +137,14 @@ class Calculator extends React.Component {
   }
 
   render() {
+    const { integerStr, hasDecimal, decimalStr, storedValue } = this.state;
+
     return (
       <div className='calculator'>
         <div className='value'>
-          {this.state.value? this.state.value.toString(): ''}
-          {
-            this.state.hasDecimal ? '.' + (this.state.decimal ? this.state.decimal.toString(): '') : ''
-          }
+          {integerStr}
+          {hasDecimal ? `.${decimalStr}` : null}
+          {!integerStr.length ? storedValue : null}
         </div>
         <div className='cells'>
           {/* TOP ROW  */}
@@ -155,12 +156,12 @@ class Calculator extends React.Component {
           <div className='cell' data-number="8" onClick={::this.handleNumberClicked}>8</div>
           <div className='cell' data-number="9" onClick={::this.handleNumberClicked}>9</div>
           <div className='cell' data-operation="*" onClick={::this.handleOperation}>x</div>
-          {/* TOP ROW  */}
+          {/* THIRD ROW  */}
           <div className='cell' data-number="4" onClick={::this.handleNumberClicked}>4</div>
           <div className='cell' data-number="5" onClick={::this.handleNumberClicked}>5</div>
           <div className='cell' data-number="6" onClick={::this.handleNumberClicked}>6</div>
           <div className='cell' data-operation="-" onClick={::this.handleOperation}>-</div>
-          {/* TOP ROW  */}
+          {/* FOURTH ROW  */}
           <div className='cell' data-number="1" onClick={::this.handleNumberClicked}>1</div>
           <div className='cell' data-number="2" onClick={::this.handleNumberClicked}>2</div>
           <div className='cell' data-number="3" onClick={::this.handleNumberClicked}>3</div>
