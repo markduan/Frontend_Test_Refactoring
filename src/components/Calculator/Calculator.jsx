@@ -141,28 +141,28 @@ class Calculator extends React.Component {
         </div>
         <div className='Wrapper'>
           {/* TOP ROW  */}
-          <div className='cell clear' onClick={this.clearAll}>AC</div>
-          <div className='cell clear span-two' onClick={this.clearCurrent}>C</div>
-          <div className='cell divide operation' onClick={this.divide}>/</div>
+          <div className='cell' onClick={this.clearAll}>AC</div>
+          <div className='cell span-two' onClick={this.clearCurrent}>C</div>
+          <div className='cell' onClick={this.divide}>/</div>
           {/* SECOND TOP ROW  */}
-          <div className='cell number' onClick={this.numberClicked(7)}>7</div>
-          <div className='cell number' onClick={this.numberClicked(8)}>8</div>
-          <div className='cell number' onClick={this.numberClicked(9)}>9</div>
-          <div className='cell multiply operation' onClick={this.multiply}>x</div>
+          <div className='cell' onClick={this.numberClicked(7)}>7</div>
+          <div className='cell' onClick={this.numberClicked(8)}>8</div>
+          <div className='cell' onClick={this.numberClicked(9)}>9</div>
+          <div className='cell' onClick={this.multiply}>x</div>
           {/* TOP ROW  */}
-          <div className='cell number' onClick={this.numberClicked(4)}>4</div>
-          <div className='cell number' onClick={this.numberClicked(5)}>5</div>
-          <div className='cell number' onClick={this.numberClicked(6)}>6</div>
-          <div className='cell subtract operation' onClick={this.subtract}>-</div>
+          <div className='cell' onClick={this.numberClicked(4)}>4</div>
+          <div className='cell' onClick={this.numberClicked(5)}>5</div>
+          <div className='cell' onClick={this.numberClicked(6)}>6</div>
+          <div className='cell' onClick={this.subtract}>-</div>
           {/* TOP ROW  */}
-          <div className='cell number' onClick={this.numberClicked(1)}>1</div>
-          <div className='cell number' onClick={this.numberClicked(2)}>2</div>
-          <div className='cell number' onClick={this.numberClicked(3)}>3</div>
-          <div className='cell add operation' onClick={this.add}>+</div>
+          <div className='cell' onClick={this.numberClicked(1)}>1</div>
+          <div className='cell' onClick={this.numberClicked(2)}>2</div>
+          <div className='cell' onClick={this.numberClicked(3)}>3</div>
+          <div className='cell' onClick={this.add}>+</div>
           {/* BOTTOM ROW  */}
-          <div className='cell number bottom-left' onClick={this.numberClicked(0)}>0</div>
+          <div className='cell bottom-left' onClick={this.numberClicked(0)}>0</div>
           <div className='cell decimal' onClick={this.decimal}>.</div>
-          <div className='cell equals operation' onClick={this.eval}>=</div>
+          <div className='cell equals' onClick={this.eval}>=</div>
         </div>
       </div>
     );
