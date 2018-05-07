@@ -81,10 +81,6 @@ class Calculator extends React.Component {
     this.setState({value: null})
   }
 
-  decimal(e) {
-    this.setState({hasDecimal: true})
-  }
-
   getCurrentValue() {
     const { integerStr, decimalStr, hasDecimal } = this.state;
 
@@ -131,6 +127,15 @@ class Calculator extends React.Component {
     this.appendNumber(number);
   }
 
+  handleDecimal() {
+    const { integerStr } = this.state;
+
+    this.setState({
+      integerStr: integerStr || '0',
+      hasDecimal: true,
+    });
+  }
+
   render() {
     return (
       <div className='calculator'>
@@ -162,7 +167,7 @@ class Calculator extends React.Component {
           <div className='cell' data-operation="+" onClick={::this.handleOperation}>+</div>
           {/* BOTTOM ROW  */}
           <div className='cell bottom-left' data-number="0" onClick={::this.handleNumberClicked}>0</div>
-          <div className='cell decimal' onClick={::this.decimal}>.</div>
+          <div className='cell' onClick={::this.handleDecimal}>.</div>
           <div className='cell equals' data-operation="=" onClick={::this.handleOperation}>=</div>
         </div>
       </div>
