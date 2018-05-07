@@ -48,7 +48,12 @@ class Calculator extends React.Component {
   }
 
   clearCurrent() {
-    this.setState({value: null})
+    // reset integerStr to '0'
+    this.setState({
+      integerStr: '0',
+      decimalStr: '',
+      hasDecimal: false
+    });
   }
 
   getCurrentValue() {
