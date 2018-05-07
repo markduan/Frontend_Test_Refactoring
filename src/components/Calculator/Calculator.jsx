@@ -73,20 +73,6 @@ class Calculator extends React.Component {
     }
   }
 
-  number(num) {
-    this.state.hasDecimal ? this.setState({
-      decimal: this.state.decimal * 10 + num
-    }) : this.setState({
-      value: this.state.value * 10 + num
-    });
-  }
-
-  numberClicked(num) {
-    return (event) => {
-      this.number(num);
-    }
-  };
-
   clearAll() {
     this.setState(INIT_STATE);
   }
@@ -130,6 +116,21 @@ class Calculator extends React.Component {
     this.operate(operation);
   }
 
+  appendNumber(number) {
+    const { hasDecimal, decimalStr, integerStr } = this.state;
+
+    hasDecimal ? this.setState({
+      decimalStr: decimalStr + number
+    }) : this.setState({
+      integerStr: integerStr === '0' || integerStr === '' ? number : integerStr + number
+    });
+  }
+
+  handleNumberClicked(e) {
+    const { number } = e.target.dataset;
+    this.appendNumber(number);
+  }
+
   render() {
     return (
       <div className='calculator'>
@@ -145,22 +146,22 @@ class Calculator extends React.Component {
           <div className='cell span-two' onClick={::this.clearCurrent}>C</div>
           <div className='cell' data-operation="/" onClick={::this.handleOperation}>/</div>
           {/* SECOND TOP ROW  */}
-          <div className='cell' onClick={::this.numberClicked(7)}>7</div>
-          <div className='cell' onClick={::this.numberClicked(8)}>8</div>
-          <div className='cell' onClick={::this.numberClicked(9)}>9</div>
+          <div className='cell' data-number="7" onClick={::this.handleNumberClicked}>7</div>
+          <div className='cell' data-number="8" onClick={::this.handleNumberClicked}>8</div>
+          <div className='cell' data-number="9" onClick={::this.handleNumberClicked}>9</div>
           <div className='cell' data-operation="*" onClick={::this.handleOperation}>x</div>
           {/* TOP ROW  */}
-          <div className='cell' onClick={::this.numberClicked(4)}>4</div>
-          <div className='cell' onClick={::this.numberClicked(5)}>5</div>
-          <div className='cell' onClick={::this.numberClicked(6)}>6</div>
+          <div className='cell' data-number="4" onClick={::this.handleNumberClicked}>4</div>
+          <div className='cell' data-number="5" onClick={::this.handleNumberClicked}>5</div>
+          <div className='cell' data-number="6" onClick={::this.handleNumberClicked}>6</div>
           <div className='cell' data-operation="-" onClick={::this.handleOperation}>-</div>
           {/* TOP ROW  */}
-          <div className='cell' onClick={::this.numberClicked(1)}>1</div>
-          <div className='cell' onClick={::this.numberClicked(2)}>2</div>
-          <div className='cell' onClick={::this.numberClicked(3)}>3</div>
+          <div className='cell' data-number="1" onClick={::this.handleNumberClicked}>1</div>
+          <div className='cell' data-number="2" onClick={::this.handleNumberClicked}>2</div>
+          <div className='cell' data-number="3" onClick={::this.handleNumberClicked}>3</div>
           <div className='cell' data-operation="+" onClick={::this.handleOperation}>+</div>
           {/* BOTTOM ROW  */}
-          <div className='cell bottom-left' onClick={::this.numberClicked(0)}>0</div>
+          <div className='cell bottom-left' data-number="0" onClick={::this.handleNumberClicked}>0</div>
           <div className='cell decimal' onClick={::this.decimal}>.</div>
           <div className='cell equals' data-operation="=" onClick={::this.handleOperation}>=</div>
         </div>
