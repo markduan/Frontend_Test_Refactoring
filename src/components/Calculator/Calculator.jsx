@@ -10,6 +10,31 @@ const INIT_STATE = {
   currentOperation: null
 };
 
+const CALCULATOR_OPERATIONS = {
+  '/': (prevValue, nextValue) => {
+    // todo if nextValue is zero, `Infinity` will be returned
+    return prevValue / nextValue;
+  },
+
+  '*': (prevValue, nextValue) => {
+    // todo format return value
+    return prevValue * nextValue;
+  },
+
+  '+': (prevValue, nextValue) => {
+    return prevValue + nextValue
+  },
+
+  '-': (prevValue, nextValue) => {
+    // todo format return value
+    return prevValue - nextValue;
+  },
+
+  '=': (prevValue, nextValue) => {
+    return nextValue;
+  }
+};
+
 class Calculator extends React.Component {
 
   constructor(props) {
@@ -48,55 +73,6 @@ class Calculator extends React.Component {
     }
   }
 
-  multiply() {
-    this.eval();
-    this.setState({
-      currentOperation: "multiply",
-      storedValue: this.state.value,
-      value: null,
-      decimal: null,
-      hasDecimal: false
-    });
-  }
-
-  divide() {
-    this.eval();
-    this.setState({
-      currentOperation: "divide",
-      storedValue: this.state.value,
-      value: null,
-      decimal: null,
-      hasDecimal: false
-    });
-  }
-
-  subtract() {
-    this.eval();
-    this.setState({
-      currentOperation: "subtract",
-      storedValue: this.state.value,
-      value: null,
-      decimal: null,
-      hasDecimal: false
-    });
-  }
-
-  add() {
-    console.log(this);
-    this.eval();
-    this.setState({
-      currentOperation: "add",
-      storedValue: this.state.value,
-      value: null,
-      decimal: null,
-      hasDecimal: false
-    });
-  }
-
-  equals() {
-    this.eval();
-  };
-
   number(num) {
     this.state.hasDecimal ? this.setState({
       decimal: this.state.decimal * 10 + num
@@ -123,6 +99,37 @@ class Calculator extends React.Component {
     this.setState({hasDecimal: true})
   }
 
+  getCurrentValue() {
+    const { integerStr, decimalStr, hasDecimal } = this.state;
+
+    if (hasDecimal) {
+      return Number(parseFloat(`${integerStr}.${decimalStr}`));
+    }
+
+    return Number(integerStr);
+  }
+
+  operate(operation) {
+    const { storedValue, currentOperation } = this.state;
+
+    const currentValue = this.getCurrentValue();
+    const newStoredValue = !storedValue ? currentValue :
+      CALCULATOR_OPERATIONS[currentOperation](storedValue, currentValue);
+
+    this.setState({
+      currentOperation: operation,
+      storedValue: newStoredValue,
+      integerStr: '',
+      decimalStr: '',
+      hasDecimal: false,
+    });
+  }
+
+  handleOperation(e) {
+    const { operation } = e.target.dataset;
+    this.operate(operation);
+  }
+
   render() {
     return (
       <div className='calculator'>
@@ -136,26 +143,26 @@ class Calculator extends React.Component {
           {/* TOP ROW  */}
           <div className='cell' onClick={::this.clearAll}>AC</div>
           <div className='cell span-two' onClick={::this.clearCurrent}>C</div>
-          <div className='cell' onClick={::this.divide}>/</div>
+          <div className='cell' data-operation="/" onClick={::this.handleOperation}>/</div>
           {/* SECOND TOP ROW  */}
           <div className='cell' onClick={::this.numberClicked(7)}>7</div>
           <div className='cell' onClick={::this.numberClicked(8)}>8</div>
           <div className='cell' onClick={::this.numberClicked(9)}>9</div>
-          <div className='cell' onClick={::this.multiply}>x</div>
+          <div className='cell' data-operation="*" onClick={::this.handleOperation}>x</div>
           {/* TOP ROW  */}
           <div className='cell' onClick={::this.numberClicked(4)}>4</div>
           <div className='cell' onClick={::this.numberClicked(5)}>5</div>
           <div className='cell' onClick={::this.numberClicked(6)}>6</div>
-          <div className='cell' onClick={::this.subtract}>-</div>
+          <div className='cell' data-operation="-" onClick={::this.handleOperation}>-</div>
           {/* TOP ROW  */}
           <div className='cell' onClick={::this.numberClicked(1)}>1</div>
           <div className='cell' onClick={::this.numberClicked(2)}>2</div>
           <div className='cell' onClick={::this.numberClicked(3)}>3</div>
-          <div className='cell' onClick={::this.add}>+</div>
+          <div className='cell' data-operation="+" onClick={::this.handleOperation}>+</div>
           {/* BOTTOM ROW  */}
           <div className='cell bottom-left' onClick={::this.numberClicked(0)}>0</div>
           <div className='cell decimal' onClick={::this.decimal}>.</div>
-          <div className='cell equals' onClick={::this.eval}>=</div>
+          <div className='cell equals' data-operation="=" onClick={::this.handleOperation}>=</div>
         </div>
       </div>
     );
