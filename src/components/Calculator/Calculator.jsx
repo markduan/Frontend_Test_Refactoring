@@ -14,18 +14,9 @@ class Calculator extends React.Component {
       decimal: null,
       currentOperation: null
     };
-
-    this.numberClicked.bind(this);
-    this.divide = this.divide.bind(this);
-    this.multiply = this.multiply.bind(this);
-    this.add = this.add.bind(this);
-    this.subtract = this.subtract.bind(this);
-    this.clearCurrent = this.clearCurrent.bind(this);
-    this.clearAll = this.clearAll.bind(this);
-    this.decimal = this.decimal.bind(this);
   }
 
-  eval = () => {
+  eval() {
     if (!this.state.storedValue)
       return;
     console.log(this.state);
@@ -100,7 +91,7 @@ class Calculator extends React.Component {
     });
   }
 
-  equals = () => {
+  equals() {
     this.eval();
   };
 
@@ -141,28 +132,28 @@ class Calculator extends React.Component {
         </div>
         <div className='cells'>
           {/* TOP ROW  */}
-          <div className='cell' onClick={this.clearAll}>AC</div>
-          <div className='cell span-two' onClick={this.clearCurrent}>C</div>
-          <div className='cell' onClick={this.divide}>/</div>
+          <div className='cell' onClick={::this.clearAll}>AC</div>
+          <div className='cell span-two' onClick={::this.clearCurrent}>C</div>
+          <div className='cell' onClick={::this.divide}>/</div>
           {/* SECOND TOP ROW  */}
-          <div className='cell' onClick={this.numberClicked(7)}>7</div>
-          <div className='cell' onClick={this.numberClicked(8)}>8</div>
-          <div className='cell' onClick={this.numberClicked(9)}>9</div>
-          <div className='cell' onClick={this.multiply}>x</div>
+          <div className='cell' onClick={::this.numberClicked(7)}>7</div>
+          <div className='cell' onClick={::this.numberClicked(8)}>8</div>
+          <div className='cell' onClick={::this.numberClicked(9)}>9</div>
+          <div className='cell' onClick={::this.multiply}>x</div>
           {/* TOP ROW  */}
-          <div className='cell' onClick={this.numberClicked(4)}>4</div>
-          <div className='cell' onClick={this.numberClicked(5)}>5</div>
-          <div className='cell' onClick={this.numberClicked(6)}>6</div>
-          <div className='cell' onClick={this.subtract}>-</div>
+          <div className='cell' onClick={::this.numberClicked(4)}>4</div>
+          <div className='cell' onClick={::this.numberClicked(5)}>5</div>
+          <div className='cell' onClick={::this.numberClicked(6)}>6</div>
+          <div className='cell' onClick={::this.subtract}>-</div>
           {/* TOP ROW  */}
-          <div className='cell' onClick={this.numberClicked(1)}>1</div>
-          <div className='cell' onClick={this.numberClicked(2)}>2</div>
-          <div className='cell' onClick={this.numberClicked(3)}>3</div>
-          <div className='cell' onClick={this.add}>+</div>
+          <div className='cell' onClick={::this.numberClicked(1)}>1</div>
+          <div className='cell' onClick={::this.numberClicked(2)}>2</div>
+          <div className='cell' onClick={::this.numberClicked(3)}>3</div>
+          <div className='cell' onClick={::this.add}>+</div>
           {/* BOTTOM ROW  */}
-          <div className='cell bottom-left' onClick={this.numberClicked(0)}>0</div>
-          <div className='cell decimal' onClick={this.decimal}>.</div>
-          <div className='cell equals' onClick={this.eval}>=</div>
+          <div className='cell bottom-left' onClick={::this.numberClicked(0)}>0</div>
+          <div className='cell decimal' onClick={::this.decimal}>.</div>
+          <div className='cell equals' onClick={::this.eval}>=</div>
         </div>
       </div>
     );
